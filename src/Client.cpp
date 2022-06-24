@@ -25,21 +25,21 @@ Client::Client(const std::shared_ptr<Server> &server, size_t thread_cnt, size_t 
     std::vector<std::string> source = CommandGenerator(cmd_cnt);
     std::cout <<"Running test..." << std::endl;
 
-	for(size_t i = 0; i < threads_.size(); i++)
-	{
+    for(size_t i = 0; i < threads_.size(); i++)
+    {
         threads_[i] = std::thread([=] { SourceHandler(source); });
-	}
+    }
 }
 
 Client::~Client()
 {
     // Wait for threads to finish before we exit
-	for(size_t i = 0; i < threads_.size(); i++)
-	{
-		if(threads_[i].joinable())
-		{
-			threads_[i].join();
-		}
+    for(size_t i = 0; i < threads_.size(); i++)
+    {
+        if(threads_[i].joinable())
+        {
+            threads_[i].join();
+        }
     }
     std::cout << statistic_.str();
 }
@@ -69,8 +69,8 @@ void Client::SourceHandler(std::vector<std::string> commands)
 
     std::lock_guard<std::mutex> guard(lock_);
     statistic_ << "[CLIENT id:" << th_id << "] "
-              <<  "total " << total_commands
-              << " processed " << processed_commands <<  std::endl;
+               <<  "total " << total_commands
+               << " processed " << processed_commands <<  std::endl;
 }
 
 size_t Client::GetRandom(size_t min, size_t max)
